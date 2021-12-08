@@ -6,97 +6,110 @@ import 'antd/dist/antd.css';
 import Buttons from './components/Buttons';
 
 function App() {
-  const { selectedRowKeys, setSelectedRowKeys } = useState([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const onSelectChange = (selected) => {
+    console.log('selectedRowKeys changed: ', selected);
+    setSelectedRowKeys(selected);
+  };
+
   const expandedRowRender = () => {
     const columns = [
-      // {
-      //   dataIndex: 'status',
-      //   width: '0px',
-      //   render: (text, row, index) => {
-      //     const obj = {
-      //       children: text,
-      //       props: {},
-      //     };
-      //     if (text !== null || (text !== '' && index === 0)) {
-      //       obj.props.colSpan = 15;
-      //     }
-      //     return obj;
-      //   },
-      // },
       {
         title: 'Room',
         dataIndex: 'room',
+        key: 'room',
+        sorter: (a, b) => a.room - b.room,
+        // render: (value, row, index) => {
+        //   const obj = {
+        //     children: value,
+        //     props: {},
+        //   };
+        //   if (value.toString().includes('Status')) {
+        //     obj.props.colSpan = 15;
+        //   }
+        //   return obj;
+        // },
       },
       {
         title: 'Type',
         dataIndex: 'type',
+        key: 'type',
       },
       {
         title: 'Title',
         dataIndex: 'title',
+        key: 'title',
       },
       {
         title: 'Guest',
         dataIndex: 'guest',
-        width: 300,
+        key: 'guest',
+        width: 150,
       },
       {
         title: 'Birthday',
         dataIndex: 'birthday',
+        key: 'birthday',
       },
       {
         title: 'Nationalty',
         dataIndex: 'nationalty',
+        key: 'nationalty',
       },
       {
         title: 'Provice',
         dataIndex: 'provice',
+        key: 'provice',
       },
       {
         title: 'Identity papers',
         dataIndex: 'identityPapers',
+        key: 'identityPapers',
       },
       {
         title: 'ID Number',
         dataIndex: 'idNumber',
+        key: 'idNumber',
       },
       {
         title: 'Issue Date',
         dataIndex: 'issueDate',
+        key: 'issueDate',
       },
       {
         title: 'Place of issue',
         dataIndex: 'placeOfIssue',
+        key: 'placeOfIssue',
       },
       {
         title: 'Phone',
         dataIndex: 'phone',
+        key: 'phone',
       },
       {
         title: 'Email',
         dataIndex: 'email',
+        key: 'email',
       },
       {
         title: 'Address',
         dataIndex: 'address',
+        key: 'address',
       },
       {
         title: 'Guest Type',
         dataIndex: 'guestType',
+        key: 'guestType',
       },
       {
         title: 'Note',
         dataIndex: 'note',
+        key: 'note',
       },
     ];
     const data = [
-      // {
-      // key: 1,
-      // status: 'Status: Arrival (10 adults)',
-      // children: []
-      // }
       {
-        key: 11,
+        key: 1,
         room: 1010,
         type: 'SUPT',
         title: 'Mr.',
@@ -106,7 +119,7 @@ function App() {
         guestType: 'RegularGuest',
       },
       {
-        key: 12,
+        key: 2,
         room: 1010,
         type: 'SUPT',
         title: 'Mr.',
@@ -116,7 +129,7 @@ function App() {
         guestType: 'RegularGuest',
       },
       {
-        key: 13,
+        key: 3,
         room: 1110,
         type: 'SUPT',
         title: 'Mr.',
@@ -126,7 +139,7 @@ function App() {
         guestType: 'RegularGuest',
       },
       {
-        key: 14,
+        key: 4,
         room: 1110,
         type: 'SUPT',
         title: 'Mr.',
@@ -136,7 +149,7 @@ function App() {
         guestType: 'RegularGuest',
       },
       {
-        key: 15,
+        key: 5,
         room: 1210,
         type: 'SUPT',
         title: 'Mr.',
@@ -146,7 +159,7 @@ function App() {
         guestType: 'RegularGuest',
       },
       {
-        key: 16,
+        key: 6,
         room: 1210,
         type: 'SUPT',
         title: 'Mr.',
@@ -156,7 +169,7 @@ function App() {
         guestType: 'RegularGuest',
       },
       {
-        key: 17,
+        key: 7,
         room: 201,
         type: 'SUPD',
         title: 'Mr.',
@@ -166,7 +179,7 @@ function App() {
         guestType: 'RegularGuest',
       },
       {
-        key: 18,
+        key: 8,
         room: 201,
         type: 'SUPD',
         title: 'Mr.',
@@ -176,7 +189,7 @@ function App() {
         guestType: 'RegularGuest',
       },
       {
-        key: 19,
+        key: 9,
         room: 304,
         type: 'SUPD',
         title: 'Mr.',
@@ -186,7 +199,7 @@ function App() {
         guestType: 'RegularGuest',
       },
       {
-        key: 110,
+        key: 10,
         room: 304,
         type: 'SUPD',
         title: 'Mr.',
@@ -199,229 +212,37 @@ function App() {
 
     const rowSelection = {
       selectedRowKeys,
+      onChange: onSelectChange,
+      onSelect: (record, selected, selectedRows) => {
+        console.log(record, selected, selectedRows);
+      },
+      onSelectAll: (selected, selectedRow, changeRows) => {
+        console.log(selected, selectedRow, changeRows);
+      },
     };
     return (
       <Table
         // expandable={{ expandedRowRender }}
         // footer={Buttons}
+        pagination={false}
         rowSelection={rowSelection}
         bordered
         columns={columns}
         dataSource={data}
+        size='middle'
       />
     );
   };
-
-  // const columns = [
-  //   // {
-  //   //   dataIndex: 'status',
-  //   //   width: '0px',
-  //   //   render: (text, row, index) => {
-  //   //     const obj = {
-  //   //       children: text,
-  //   //       props: {},
-  //   //     };
-  //   //     if (text !== null || (text !== '' && index === 0)) {
-  //   //       obj.props.colSpan = 15;
-  //   //     }
-  //   //     return obj;
-  //   //   },
-  //   // },
-  //   {
-  //     title: 'Room',
-  //     dataIndex: 'room',
-  //   },
-  //   {
-  //     title: 'Type',
-  //     dataIndex: 'type',
-  //   },
-  //   {
-  //     title: 'Title',
-  //     dataIndex: 'title',
-  //   },
-  //   {
-  //     title: 'Guest',
-  //     dataIndex: 'guest',
-  //     width: 300,
-  //   },
-  //   {
-  //     title: 'Birthday',
-  //     dataIndex: 'birthday',
-  //   },
-  //   {
-  //     title: 'Nationalty',
-  //     dataIndex: 'nationalty',
-  //   },
-  //   {
-  //     title: 'Provice',
-  //     dataIndex: 'provice',
-  //   },
-  //   {
-  //     title: 'Identity papers',
-  //     dataIndex: 'identityPapers',
-  //   },
-  //   {
-  //     title: 'ID Number',
-  //     dataIndex: 'idNumber',
-  //   },
-  //   {
-  //     title: 'Issue Date',
-  //     dataIndex: 'issueDate',
-  //   },
-  //   {
-  //     title: 'Place of issue',
-  //     dataIndex: 'placeOfIssue',
-  //   },
-  //   {
-  //     title: 'Phone',
-  //     dataIndex: 'phone',
-  //   },
-  //   {
-  //     title: 'Email',
-  //     dataIndex: 'email',
-  //   },
-  //   {
-  //     title: 'Address',
-  //     dataIndex: 'address',
-  //   },
-  //   {
-  //     title: 'Guest Type',
-  //     dataIndex: 'guestType',
-  //   },
-  //   {
-  //     title: 'Note',
-  //     dataIndex: 'note',
-  //   },
-  // ];
-  // const data = [
-  //   // {
-  //   // key: 1,
-  //   // status: 'Status: Arrival (10 adults)',
-  //   // children: []
-  //   // }
-  //   {
-  //     key: 11,
-  //     room: 1010,
-  //     type: 'SUPT',
-  //     title: 'Mr.',
-  //     guest: 'Guest 1',
-  //     birthday: '01/01/1990',
-  //     nationalty: 'Việt Nam',
-  //     guestType: 'RegularGuest',
-  //   },
-  //   {
-  //     key: 12,
-  //     room: 1010,
-  //     type: 'SUPT',
-  //     title: 'Mr.',
-  //     guest: 'Guest 2',
-  //     birthday: '01/01/1990',
-  //     nationalty: 'Việt Nam',
-  //     guestType: 'RegularGuest',
-  //   },
-  //   {
-  //     key: 13,
-  //     room: 1110,
-  //     type: 'SUPT',
-  //     title: 'Mr.',
-  //     guest: 'Guest 1',
-  //     birthday: '01/01/1990',
-  //     nationalty: 'Việt Nam',
-  //     guestType: 'RegularGuest',
-  //   },
-  //   {
-  //     key: 14,
-  //     room: 1110,
-  //     type: 'SUPT',
-  //     title: 'Mr.',
-  //     guest: 'Guest 2',
-  //     birthday: '01/01/1990',
-  //     nationalty: 'Việt Nam',
-  //     guestType: 'RegularGuest',
-  //   },
-  //   {
-  //     key: 15,
-  //     room: 1210,
-  //     type: 'SUPT',
-  //     title: 'Mr.',
-  //     guest: 'Guest 1',
-  //     birthday: '01/01/1990',
-  //     nationalty: 'Việt Nam',
-  //     guestType: 'RegularGuest',
-  //   },
-  //   {
-  //     key: 16,
-  //     room: 1210,
-  //     type: 'SUPT',
-  //     title: 'Mr.',
-  //     guest: 'Guest 2',
-  //     birthday: '01/01/1990',
-  //     nationalty: 'Việt Nam',
-  //     guestType: 'RegularGuest',
-  //   },
-  //   {
-  //     key: 17,
-  //     room: 201,
-  //     type: 'SUPD',
-  //     title: 'Mr.',
-  //     guest: 'Guest 1',
-  //     birthday: '01/01/1990',
-  //     nationalty: 'Việt Nam',
-  //     guestType: 'RegularGuest',
-  //   },
-  //   {
-  //     key: 18,
-  //     room: 201,
-  //     type: 'SUPD',
-  //     title: 'Mr.',
-  //     guest: 'Guest 2',
-  //     birthday: '01/01/1990',
-  //     nationalty: 'Việt Nam',
-  //     guestType: 'RegularGuest',
-  //   },
-  //   {
-  //     key: 19,
-  //     room: 304,
-  //     type: 'SUPD',
-  //     title: 'Mr.',
-  //     guest: 'Guest 1',
-  //     birthday: '01/01/1990',
-  //     nationalty: 'Việt Nam',
-  //     guestType: 'RegularGuest',
-  //   },
-  //   {
-  //     key: 110,
-  //     room: 304,
-  //     type: 'SUPD',
-  //     title: 'Mr.',
-  //     guest: 'Guest 2',
-  //     birthday: '01/01/1990',
-  //     nationalty: 'Việt Nam',
-  //     guestType: 'RegularGuest',
-  //   },
-  // ];
-
-  // const rowSelection = {
-  //   selectedRowKeys,
-  // };
-  // return (
-  //   <Table
-  //     expandable={{ expandedRowRender }}
-  //     footer={Buttons}
-  //     rowSelection={rowSelection}
-  //     bordered
-  //     columns={columns}
-  //     dataSource={data}
-  //   />
-  // );
   const columns = [
     {
       title: 'Status',
       dataIndex: 'status',
+      key: 'status',
     },
   ];
   const data = [
     {
+      key: 1,
       status: 'Status: Arrival(10 adults)',
     },
   ];
@@ -435,6 +256,7 @@ function App() {
       columns={columns}
       dataSource={data}
       pagination={false}
+      size='middle'
     />
   );
 }
